@@ -1,0 +1,25 @@
+server:
+  port: 8989
+spring:
+  application:
+    name: STORECLOUD-GATEWAY
+  cloud:
+    gateway:
+      routes:
+      - id: store-locator-service
+        uri: lb://STORE-LOCATOR-SERVICE
+        predicates:
+        - Path=/storelocator/**
+      - id: StoreDetail
+        uri: lb://STOREDETAIL-SERVICE
+        predicates:
+        - Path=/store/**
+      
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
